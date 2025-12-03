@@ -1,0 +1,193 @@
+# ============================================================
+# WEEK 6 – DOCKER COMPOSE COMPLETE LAB (ALL TOGETHER)
+# ============================================================
+
+
+# ============================================================
+# TASK 1: BASIC MULTI-CONTAINER USING DOCKER COMPOSE
+# (NGINX + POSTGRES)
+# ============================================================
+
+docker compose up -d
+# Starts all services in background
+
+docker compose down
+# Stops and removes all containers created by compose
+
+docker compose ps
+# Shows running services
+
+
+# ============================================================
+# TASK 2: ADD REDIS + depends_on
+# ============================================================
+
+docker compose up -d
+# Restarts services after adding redis + depends_on
+
+docker compose ps
+# Verifies running containers
+
+
+# ============================================================
+# TASK 3: RUN ON ANOTHER MACHINE
+# ============================================================
+
+docker compose up -d
+# Runs same containers on another system
+
+
+# ============================================================
+# TASK 4: NETWORK + VOLUME (PERSISTENT STORAGE)
+# ============================================================
+
+docker compose up -d
+# Runs containers with custom network and volume
+
+docker compose down
+# Stops containers (volume is preserved)
+
+docker compose up -d
+# Starts again – DB data will persist
+
+
+# ============================================================
+# TASK 5: FLASK APP USING DOCKERFILE + COMPOSE
+# ============================================================
+
+docker compose up --build
+# Builds image from Dockerfile and runs containers
+
+# Open browser:
+# http://localhost:5000
+
+docker compose down
+# Stops Flask + DB containers
+
+
+# ============================================================
+# docker-compose.yml (TASK 1 – NGINX + POSTGRES)
+# ============================================================
+
+version: "3.9"
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+
+# ============================================================
+# docker-compose.yml (TASK 2 – ADD REDIS + depends_on)
+# ============================================================
+
+version: "3.9"
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+
+  redis:
+    image: redis:alpine
+
+# ============================================================
+# docker-compose.yml (TASK 4 – CUSTOM NETWORK + VOLUME)
+# ============================================================
+
+version: "3.9"
+
+networks:
+  app-net:
+
+volumes:
+  db-data:
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    networks:
+      - app-net
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+# ============================================================
+# docker-compose.yml (TASK 5 – FLASK APP + POSTGRES)
+# ============================================================
+
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+
+# ============================================================
+# app.py (FLASK APPLICATION)
+# ============================================================
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello from Flask + Docker!"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+
+# ============================================================
+# Dockerfile (FOR FLASK APP)
+# ============================================================
+
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY app.py /app/
+
+RUN pip install flask
+
+CMD ["python", "app.py"]
