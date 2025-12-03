@@ -122,3 +122,98 @@ minikube stop
 
 minikube delete
 # Completely removes the Minikube cluster
+
+
+
+# ============================================================
+# NAGIOS AUTOMATION USING DOCKER – STEP BY STEP
+# ============================================================
+
+
+# ============================================================
+# STEP 1: PULL THE NAGIOS DOCKER IMAGE
+# ============================================================
+
+docker pull jasonrivers/nagios:latest
+# Downloads the latest Nagios Docker image from Docker Hub
+
+
+# ============================================================
+# STEP 2: RUN NAGIOS CONTAINER
+# ============================================================
+
+docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+# Runs Nagios container
+# --name nagiosdemo → assigns container name
+# -p 8888:80 → maps host port 8888 to container port 80
+
+
+# ============================================================
+# STEP 3: ACCESS NAGIOS DASHBOARD (BROWSER)
+# ============================================================
+
+# Open in browser:
+# http://localhost:8888
+
+# Login Credentials:
+# Username: nagiosadmin
+# Password: nagios
+
+# After login, explore:
+# 1. Hosts    → View monitored systems
+# 2. Services → View CPU, memory, disk monitoring
+# 3. Alerts   → View notifications and warnings
+
+
+# ============================================================
+# STEP 4: MONITORING HOST DETAILS (DASHBOARD ACTIONS)
+# ============================================================
+
+# From Nagios Web UI:
+# - Select Hosts → Click on any host
+# - View Host Status → UP / DOWN
+# - View Metrics → CPU, memory, network
+# - Actions → Reschedule checks, disable alerts, schedule downtime
+
+
+# ============================================================
+# STEP 5: STOP AND REMOVE NAGIOS
+# ============================================================
+
+
+# ----------------------------
+# STOP THE CONTAINER
+# ----------------------------
+
+docker stop nagiosdemo
+# Stops the running Nagios container
+
+
+# ----------------------------
+# REMOVE THE CONTAINER
+# ----------------------------
+
+docker rm nagiosdemo
+# Deletes the stopped Nagios container
+
+
+# ----------------------------
+# REMOVE THE IMAGE (OPTIONAL)
+# ----------------------------
+
+docker images
+# Lists all available Docker images
+
+docker rmi jasonrivers/nagios:latest
+# Deletes the Nagios Docker image from the system
+
+
+# ============================================================
+# FINAL VERIFICATION
+# ============================================================
+
+docker ps -a
+# Confirms whether Nagios container is removed
+
+docker images
+# Confirms whether Nagios image is deleted
