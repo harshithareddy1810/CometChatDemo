@@ -1,1 +1,131 @@
 https://azeemafirdous2005.github.io/SE-LAB-PDFS/
+
+# ================================
+# BASIC REDIS & DOCKER COMMANDS
+# ================================
+
+docker pull redis
+# Downloads the latest Redis image from Docker Hub
+
+docker run --name my-redis -d redis
+# Creates and runs a container named "my-redis" in background
+
+docker ps
+# Shows only currently running containers
+
+docker exec -it my-redis redis-cli
+# Opens Redis CLI inside the running container
+
+SET name "Alice"
+# Stores key-value pair in Redis
+
+GET name
+# Retrieves value for key 'name'
+
+docker stop my-redis
+# Stops the running Redis container
+
+docker start my-redis
+# Restarts the stopped Redis container
+
+docker rm my-redis
+# Deletes the Redis container permanently
+
+docker rmi redis
+# Deletes the Redis image from the system
+
+
+# ================================
+# FOLDER SETUP COMMANDS
+# ================================
+
+# Windows (Git Bash)
+cd /c/DockerProjects/Redis
+# Navigate to project folder
+
+# Mac / Linux
+mkdir ~/DockerProjects/Redis
+cd ~/DockerProjects/Redis
+# Create and move into project folder
+
+
+# ================================
+# DOCKERFILE & IMAGE COMMANDS
+# ================================
+
+docker build -t redisnew .
+# Builds a new Docker image named "redisnew"
+
+docker run --name myredisnew -d redisnew
+# Runs a new container from redisnew image
+
+docker ps
+# Lists running containers
+
+docker stop myredisnew
+# Stops the container "myredisnew"
+
+docker login
+# Logs into Docker Hub
+
+docker ps -a
+# Lists all containers (running + stopped)
+
+docker commit 0e993d2009a1 budarajumadhurika/redis1
+# Saves container changes as a new image
+
+docker images
+# Lists all local Docker images
+
+docker push budarajumadhurika/redis1
+# Uploads the image to Docker Hub
+
+docker rm 0e993d2009a1
+# Deletes container using ID
+
+docker rmi budarajumadhurika/redis1
+# Deletes the Docker image
+
+docker logout
+# Logs out of Docker Hub
+
+
+# ================================
+# IMAGE REUSE & REDIS VERIFICATION
+# ================================
+
+docker pull budarajumadhurika/redis1
+# Downloads the image from Docker Hub
+
+docker run --name myredis -d budarajumadhurika/redis1
+# Runs a container using the pulled image
+
+docker exec -it myredis redis-cli
+# Opens Redis CLI inside the new container
+
+SET name "Abcdef"
+# Saves a value in Redis
+
+GET name
+# Retrieves the saved value
+
+exit
+# Exits Redis CLI
+
+docker ps -a
+# Checks all containers
+
+docker stop myredis
+# Stops the container
+
+docker rm 50a6e4a9c326
+# Deletes the container using ID
+
+docker images
+# Lists all remaining images
+
+docker rmi budarajumadhurika/redis1
+# Deletes the image finally
+
+docker logout
+# Logs out from Docker Hub
