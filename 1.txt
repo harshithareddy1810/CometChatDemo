@@ -1,5 +1,286 @@
 https://azeemafirdous2005.github.io/SE-LAB-PDFS/
 
+# -------------------------------
+# INITIAL SETUP & PRIVATE REPO
+# -------------------------------
+
+cd /path/to/your/project
+# Moves to project directory
+
+git init
+# Initializes local Git repository
+
+git remote add origin https://github.com/username/private-repo.git
+# Connects local repo to GitHub
+
+git add .
+# Stages all project files
+
+git commit -m "Initial commit"
+# Commits all files
+
+git push -u origin main
+# Pushes project to private GitHub repo
+
+
+# -------------------------------
+# BASIC GIT COMMANDS
+# -------------------------------
+
+git --version
+# Shows installed Git version
+
+git status
+# Displays file status
+
+git diff
+# Shows unstaged file differences
+
+git show <commit>
+# Shows commit details
+
+git log --oneline
+# Shows compact commit history
+
+
+# -------------------------------
+# REMOTE MANAGEMENT
+# -------------------------------
+
+git clone https://github.com/username/repo.git
+# Clones remote repo
+
+git remote -v
+# Shows remotes
+
+git remote rename origin upstream
+# Renames remote
+
+git remote remove origin
+# Removes remote
+
+git remote set-url origin https://github.com/new/repo.git
+# Changes remote URL
+
+git remote show origin
+# Displays remote info
+
+git fetch origin
+# Fetches latest changes without merge
+
+git pull origin main
+# Fetches and merges changes
+
+
+# -------------------------------
+# BRANCHING
+# -------------------------------
+
+git branch
+# Lists local branches
+
+git branch -a
+# Lists all branches
+
+git branch new-branch
+# Creates new branch
+
+git checkout new-branch
+# Switches branch
+
+git checkout -b feature-login
+# Creates & switches branch
+
+git merge feature-login
+# Merges branch into current branch
+
+git branch -d feature-login
+# Deletes merged branch
+
+git branch -D feature-login
+# Force deletes branch
+
+git branch -r
+# Lists remote branches
+
+
+# -------------------------------
+# UNDO & RECOVERY
+# -------------------------------
+
+git restore filename
+# Discards unstaged file changes
+
+git reset file.txt
+# Unstages a file
+
+git revert <commit>
+# Reverts a commit safely
+
+git commit --amend -m "Corrected message"
+# Fixes wrong commit message
+
+git reflog
+# Shows all HEAD movements
+
+git checkout -b feature-ui <commit_hash>
+# Restores deleted branch
+
+
+# -------------------------------
+# REMOVE SENSITIVE FILE HISTORY
+# -------------------------------
+
+git filter-branch --force --index-filter \
+"git rm --cached --ignore-unmatch secrets.txt" \
+--prune-empty --tag-name-filter cat -- --all
+# Permanently deletes secret file from history
+
+
+# -------------------------------
+# STASH
+# -------------------------------
+
+git stash
+# Temporarily saves uncommitted changes
+
+git stash apply
+# Restores stashed changes
+
+
+# -------------------------------
+# GITIGNORE
+# -------------------------------
+
+touch .gitignore
+# Creates .gitignore file
+
+# Example entries inside .gitignore:
+# *.log
+# node_modules/
+# secret.txt
+
+
+# -------------------------------
+# BLAME & MERGE CHECK
+# -------------------------------
+
+git blame script.py
+# Shows who modified each line
+
+git branch --merged
+# Shows merged branches
+
+
+# -------------------------------
+# DELETE MULTIPLE BRANCHES
+# -------------------------------
+
+git branch -d branch1 branch2 branch3
+# Deletes multiple branches at once
+
+
+# -------------------------------
+# BASIC GIT CONFIGURATION
+# -------------------------------
+
+git config --global user.name "Your Name"
+# Sets your global Git username
+
+git config --global user.email you@example.com
+# Sets your global Git email
+
+git remote -v
+# Shows connected remote repositories
+
+
+# -------------------------------
+# CLONE & BRANCH WORKFLOW
+# -------------------------------
+
+git clone https://github.com/username/repository-name.git
+# Clones the shared repository
+
+cd repository-name
+# Moves into the project directory
+
+git checkout -b feature/your-feature-name
+# Creates and switches to a new feature branch
+
+git add .
+# Stages all changed files
+
+git commit -m "Add descriptive message"
+# Commits staged changes
+
+git push origin feature/your-feature-name
+# Pushes feature branch to GitHub
+
+
+# -------------------------------
+# UPDATE FEATURE BRANCH
+# -------------------------------
+
+git checkout main
+# Switch to main branch
+
+git pull origin main
+# Fetches latest changes from main
+
+git checkout feature/your-new-feature
+# Switch back to feature branch
+
+git merge main
+# Merges main into feature branch
+
+
+# -------------------------------
+# RESOLVING MERGE CONFLICTS
+# -------------------------------
+
+git status
+# Shows conflicted files
+
+git add f1.txt
+# Marks conflict as resolved
+
+git commit
+# Completes merge after conflict resolution
+
+git rebase --continue
+# Continues rebase after resolving conflict
+
+git merge --abort
+# Cancels merge process
+
+
+# -------------------------------
+# PATCH CREATION
+# -------------------------------
+
+git log
+# Displays commit history
+
+git format-patch -1 abc1234
+# Creates patch for one commit
+
+git format-patch -3
+# Creates patches for last 3 commits
+
+git format-patch base_commit..HEAD
+# Creates patches from multiple commits
+
+
+# -------------------------------
+# PATCH APPLY
+# -------------------------------
+
+git apply my-changes.patch
+# Applies patch without commit history
+
+git am 0001-your-commit.patch
+# Applies patch with commit history
+
 # ================================
 # BASIC REDIS & DOCKER COMMANDS
 # ================================
