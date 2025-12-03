@@ -1,0 +1,124 @@
+# ============================================================
+# MINIKUBE AUTOMATION – COMPLETE STEP-BY-STEP COMMANDS
+# ============================================================
+
+
+# ============================================================
+# STEP 1: START MINIKUBE CLUSTER
+# ============================================================
+
+minikube start
+# Starts the local Kubernetes cluster using Minikube
+
+
+# ============================================================
+# STEP 2: CREATE & MANAGE DEPLOYMENT
+# ============================================================
+
+kubectl create deployment mynginx --image=nginx
+# Creates a Kubernetes deployment named "mynginx" using nginx image
+
+kubectl set image deployment/myngnix nginx=nginx:latest
+# Updates the image if deployment already exists (fixes image version)
+
+
+# ----------------------------
+# VERIFY DEPLOYMENT
+# ----------------------------
+
+kubectl get deployments
+# Lists all deployments and checks if "mynginx" exists
+
+kubectl get pods
+# Lists all running pods
+
+kubectl describe pods
+# Shows detailed information about each pod
+
+
+# ----------------------------
+# EXPOSE DEPLOYMENT AS SERVICE
+# ----------------------------
+
+kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
+# Exposes the nginx deployment as a NodePort service on port 80
+
+
+# ============================================================
+# STEP 3: SCALE THE DEPLOYMENT
+# ============================================================
+
+kubectl scale deployment mynginx --replicas=4
+# Scales the nginx deployment to 4 pods
+
+kubectl get service myngnix
+# Displays service details (NodePort, ClusterIP, Ports)
+
+
+# ============================================================
+# STEP 4: ACCESS THE NGINX APPLICATION
+# ============================================================
+
+
+# ----------------------------
+# OPTION 1: PORT FORWARDING
+# ----------------------------
+
+kubectl port-forward svc/mynginx 8081:80
+# Forwards container port 80 to localhost port 8081
+
+# Open in browser:
+# http://localhost:8081
+
+
+# ----------------------------
+# OPTION 2: MINIKUBE TUNNEL (IF ERROR)
+# ----------------------------
+
+minikube tunnel
+# Creates a network route to access services
+
+minikube service mynginx --url
+# Displays URL for accessing the nginx service
+
+# Open the shown URL in your browser
+
+
+# ----------------------------
+# OPEN KUBERNETES DASHBOARD
+# ----------------------------
+
+minikube dashboard
+# Opens the Kubernetes web dashboard in browser
+
+
+# ============================================================
+# STEP 5: STOP & CLEAN UP
+# ============================================================
+
+
+# ----------------------------
+# DELETE DEPLOYMENT & SERVICE
+# ----------------------------
+
+kubectl delete deployment mynginx
+# Deletes the nginx deployment
+
+kubectl delete service mynginx
+# Deletes the nginx service
+
+
+# ----------------------------
+# STOP MINIKUBE (OPTIONAL)
+# ----------------------------
+
+minikube stop
+# Stops the Minikube VM but keeps cluster data
+
+
+# ----------------------------
+# DELETE MINIKUBE CLUSTER (OPTIONAL)
+# ----------------------------
+
+minikube delete
+# Completely removes the Minikube cluster
